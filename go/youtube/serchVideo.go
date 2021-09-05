@@ -1,0 +1,89 @@
+package youtube
+
+import (
+	// "encoding/json"
+	// "fmt"
+	"github.com/joho/godotenv"
+	// "google.golang.org/api/googleapi/transport"
+	// "google.golang.org/api/youtube/v3"
+	"go_react_test_app/messages"
+	"go_react_test_app/shared"
+	"io/ioutil"
+	// "log"
+	"net/http"
+	"os"
+	"time"
+)
+
+const (
+	envPath  = "./env/youtube.env"
+	apiKey   = "API_KEY"
+	endPoint = "https://www.googleapis.com/youtube/v3/search"
+	// watchUrl = "https://www.youtube.com/watch"
+)
+
+var (
+	params      shared.SearchVideoParams
+	errMessages = messages.SetErrorMessages()
+)
+
+func SearchYoutubeList(keyword string) ([]byte, error) {
+	params.Keyword = keyword
+
+	//envファイル読み込み
+	youtube_key := getYoutubeKey()
+	if youtube_key == "" {
+		return nil, errMessages["envLoad"]
+	}
+
+	res, err := sendRequest(youtube_key)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return body, errMessages["readBody"]
+	}
+
+	return body, nil
+}
+
+func getYoutubeKey() string {
+	var getKey string
+	err := godotenv.Load(envPath)
+	if err != nil {
+		return getKey
+	}
+	getKey = os.Getenv(apiKey)
+	return getKey
+}
+
+//リクエストを送信
+func sendRequest(youtube_key string) (*http.Response, error) {
+	request, err := http.NewRequest("GET", endPoint, nil)
+	if err != nil {
+		return nil, errMessages["getRequest"]
+	}
+
+	//クエリパラメータ
+	youtubeParams := request.URL.Query()
+	youtubeParams.Add("key", youtube_key)
+	youtubeParams.Add("q", params.Keyword)
+	youtubeParams.Add("part", "snippet, id")
+	youtubeParams.Add("maxResults", "1")
+
+	request.URL.RawQuery = youtubeParams.Encode()
+	timeout := time.Duration(5 * time.Second)
+	client := &http.Client{
+		Timeout: timeout,
+	}
+
+	res, err := client.Do(request)
+	if err != nil {
+		return nil, errMessages["getRequest"]
+	}
+
+	return res, nil
+}
