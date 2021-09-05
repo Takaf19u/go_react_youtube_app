@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  react:
+    build:
+      context: .
+      dockerfile: ./build/react/Dockerfile
+    container_name: react_container
+    tty: true
+    volumes:
+    - ./react-app:/app/react
+    command: sh -c "cd /app/react  && yarn start"
+    ports:
+      - 3000:3000
+  go-app:
+    container_name: go_container
+    build: 
+      context: .
+      dockerfile: ./build/golang/Dockerfile
+    tty: true
+    ports:
+      - 8080:8080
+    volumes:
+      # ローカルのgo/フォルダをdocker内で参照する
+      - ./go:/go/src
