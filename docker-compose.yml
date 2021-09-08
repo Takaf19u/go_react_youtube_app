@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: ./build/react/Dockerfile
-    container_name: react_container
+    container_name: y-react
     tty: true
     volumes:
     - ./react-app:/app/react
@@ -12,7 +12,7 @@ services:
     ports:
       - 3000:3000
   go-app:
-    container_name: go_container
+    container_name: y-go
     build: 
       context: .
       dockerfile: ./build/golang/Dockerfile

@@ -19,7 +19,6 @@ const (
 	envPath  = "./env/youtube.env"
 	apiKey   = "API_KEY"
 	endPoint = "https://www.googleapis.com/youtube/v3/search"
-	// watchUrl = "https://www.youtube.com/watch"
 )
 
 var (
@@ -68,13 +67,7 @@ func sendRequest(youtube_key string) (*http.Response, error) {
 	}
 
 	//クエリパラメータ
-	youtubeParams := request.URL.Query()
-	youtubeParams.Add("key", youtube_key)
-	youtubeParams.Add("q", params.Keyword)
-	youtubeParams.Add("part", "snippet, id")
-	youtubeParams.Add("maxResults", "1")
-
-	request.URL.RawQuery = youtubeParams.Encode()
+	request.URL.RawQuery = createSendParams(request, youtube_key)
 	timeout := time.Duration(5 * time.Second)
 	client := &http.Client{
 		Timeout: timeout,
@@ -86,4 +79,15 @@ func sendRequest(youtube_key string) (*http.Response, error) {
 	}
 
 	return res, nil
+}
+
+// youtube側に送るparams作成
+func createSendParams(request *http.Request, key string) string {
+	sendParams := request.URL.Query()
+	sendParams.Add("key", key)
+	sendParams.Add("q", params.Keyword)
+	sendParams.Add("part", "snippet, id")
+	sendParams.Add("maxResults", "1")
+
+	return sendParams.Encode()
 }
