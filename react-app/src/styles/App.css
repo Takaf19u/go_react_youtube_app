@@ -28,18 +28,55 @@
   color: #61dafb;
 }
 
-.videoList div {
+.videoList .videoframe {
+  position: relative;
+  cursor: pointer;
+}
+
+.videoList .videoframe:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transition: 0.5s;
+}
+
+.videoList .videoframe .video {
   position: relative;
   padding-top: 56.25%;
   width: 480px;
   overflow: hidden;
 }
 
-.videoList div .videoImage {
+.videoList .videoframe .videoImage {
     position: absolute;
     top: -45px;
     left: 0;
     width: 100%;
+}
+
+.videoList .videoframe svg {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: auto;
+  width: 80px;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.videoList .videoframe:hover:after {
+  background: gray;
+  opacity: 0.4;
+}
+
+.videoList .videoframe:hover svg  {
+  color: #ff0100;
+  opacity: 0.9;
 }
 
 

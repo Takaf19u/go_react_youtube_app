@@ -1,6 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faYoutube } from '@fortawesome/free-brands-svg-icons'
 import './styles/App.css';
+import './styles/destyle.css';
 import axios from 'axios';
 
 const SERVER_URL = "http://localhost:8080"
@@ -69,12 +72,13 @@ function createVideoFrame(items) {
   } else {
     items.map( (item, i) => 
       frames.push(
-        <div className={"video-" + i}>
-          <img className={"videoImage"} src={"https://i.ytimg.com/vi/" + item.id.videoId + "/hqdefault.jpg"} />
-          <img src="./images/play_button.svg" />
+        <div className={"videoframe frame-" + i}>
+          <div className="video">
+            <img className="videoImage" src={"https://i.ytimg.com/vi/" + item.id.videoId + "/hqdefault.jpg"} />
+          </div>
+          <FontAwesomeIcon icon={faYoutube} />
         </div>
       )
-      // frames.push(<iframe className={"video" + i} width="640" height="360" src={YOUTUBE_VIDEO_URL + item.id.videoId} frameBorder="0"></iframe>)
     )
   }
   return frames
