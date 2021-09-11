@@ -28,6 +28,22 @@
   color: #61dafb;
 }
 
+.videoList div {
+  position: relative;
+  padding-top: 56.25%;
+  width: 480px;
+  overflow: hidden;
+}
+
+.videoList div .videoImage {
+    position: absolute;
+    top: -45px;
+    left: 0;
+    width: 100%;
+}
+
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

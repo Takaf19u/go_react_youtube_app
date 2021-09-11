@@ -1,18 +1,14 @@
 import React from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './styles/App.css';
 import axios from 'axios';
 
 const SERVER_URL = "http://localhost:8080"
-const WATCH_YOUTUBE_VIDEO_URL = "https://www.youtube.com/watch"
+const YOUTUBE_VIDEO_URL = "https://www.youtube.com/embed/"
 const SERCH_YOUTUBE_VIDEO_URL = `${SERVER_URL}/get`;
 axios.defaults.baseURL = SERVER_URL;
 axios.proxy = true;
 
-const test = items => {
-  var url = WATCH_YOUTUBE_VIDEO_URL + items;
-  return url
-};
 
 class App extends React.Component {
   // コンストラクタ。初期設定を行う
@@ -20,7 +16,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       keyword: "",
-      items: "",
+      items: [],
+      videoUrls: [],
     };
     // thisに各メソッドを紐付け
     // これにより、this.メソッド名で呼び出せる
@@ -40,11 +37,12 @@ class App extends React.Component {
     .then(resJson => { 
       console.log(resJson);
       this.state.items = resJson.items
-      test(this.state.items);
+      this.setState({videoUrls: this.state.items.map( item => YOUTUBE_VIDEO_URL + item.id.videoId )})
     });
   };
 
   render() {
+    var videoFrame = createVideoFrame(this.state.items);
     return (
       <div className="App">
         <header className="App-header">
@@ -54,11 +52,42 @@ class App extends React.Component {
             <input type='text' value={this.state.value} onChange={this.onChange} />
             <input type='submit' value="送信"/>
           </form>
-          <p>{test(this.state.items)}</p>
+          <ul className="videoList">
+            {videoFrame.map( (item, id) => <li key={id}>{item}</li>) }
+          </ul>
         </header>
       </div>
     );
   }
 }
+
+// 動画埋め込み用のhtmlを返す
+function createVideoFrame(items) {
+  var frames = []
+  if (items.length == 0) {
+    frames.push('検索結果の表示');
+  } else {
+    items.map( (item, i) => 
+      frames.push(
+        <div className={"video-" + i}>
+          <img className={"videoImage"} src={"https://i.ytimg.com/vi/" + item.id.videoId + "/hqdefault.jpg"} />
+          <img src="./images/play_button.svg" />
+        </div>
+      )
+      // frames.push(<iframe className={"video" + i} width="640" height="360" src={YOUTUBE_VIDEO_URL + item.id.videoId} frameBorder="0"></iframe>)
+    )
+  }
+  return frames
+}
+
+// class VideoList extends React.Component {
+//   render() {
+//     return (
+//       <button className="square">
+//         {this.props.value[0]}
+//       </button>
+//     );
+//   }
+// }
 
 export default App;
