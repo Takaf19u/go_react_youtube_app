@@ -1,9 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faYoutube } from '@fortawesome/free-brands-svg-icons'
-import './styles/App.css';
-import './styles/destyle.css';
+import '../../../styles/serchContainer.css';
+import '../../../styles/destyle.css';
 import axios from 'axios';
 
 const SERVER_URL = "http://localhost:8080"
@@ -13,7 +12,7 @@ axios.defaults.baseURL = SERVER_URL;
 axios.proxy = true;
 
 
-class App extends React.Component {
+class SerchComponent extends React.Component {
   // コンストラクタ。初期設定を行う
   constructor(props) {
     super(props);
@@ -45,27 +44,25 @@ class App extends React.Component {
   };
 
   render() {
-    var videoFrame = createVideoFrame(this.state.items);
+    var videoFrame = createVideoImageFrame(this.state.items);
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>キーワード入力でyoutubeの検索結果をかえす</p>
-          <form onSubmit={this.onSubmit}>
-            <input type='text' value={this.state.value} onChange={this.onChange} />
-            <input type='submit' value="送信"/>
-          </form>
-          <ul className="videoList">
-            {videoFrame.map( (item, id) => <li key={id}>{item}</li>) }
-          </ul>
-        </header>
+      <div className="serchContainer">
+        <div id="serch_menu" className="menu_button"></div>
+        <p>キーワード入力でyoutubeの検索結果をかえす</p>
+        <form onSubmit={this.onSubmit}>
+          <input type='text' value={this.state.value} onChange={this.onChange} />
+          <input type='submit' value="送信"/>
+        </form>
+        <ul className="videoList">
+          {videoFrame.map( (item, id) => <li key={id}>{item}</li>) }
+        </ul>
       </div>
     );
   }
 }
 
-// 動画埋め込み用のhtmlを返す
-function createVideoFrame(items) {
+// 動画のサムネイル表示html
+function createVideoImageFrame(items) {
   var frames = []
   if (items.length == 0) {
     frames.push('検索結果の表示');
@@ -74,7 +71,7 @@ function createVideoFrame(items) {
       frames.push(
         <div className={"videoframe frame-" + i}>
           <div className="video">
-            <img className="videoImage" src={"https://i.ytimg.com/vi/" + item.id.videoId + "/hqdefault.jpg"} />
+            <img className="videoImage" src={item.snippet.thumbnails.high.url} />
           </div>
           <FontAwesomeIcon icon={faYoutube} />
         </div>
@@ -84,14 +81,4 @@ function createVideoFrame(items) {
   return frames
 }
 
-// class VideoList extends React.Component {
-//   render() {
-//     return (
-//       <button className="square">
-//         {this.props.value[0]}
-//       </button>
-//     );
-//   }
-// }
-
-export default App;
+export default SerchComponent;
