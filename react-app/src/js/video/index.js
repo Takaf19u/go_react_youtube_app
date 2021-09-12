@@ -49,17 +49,6 @@ class App extends React.Component {
     var videoFrame = createVideoImageFrame(this.state.items);
     return (
       <div className="videoContainer">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>キーワード入力でyoutubeの検索結果をかえす</p>
-          <form onSubmit={this.onSubmit}>
-            <input type='text' value={this.state.value} onChange={this.onChange} />
-            <input type='submit' value="送信"/>
-          </form>
-          <ul className="videoList">
-            {videoFrame.map( (item, id) => <li key={id}>{item}</li>) }
-          </ul>
-        </header>
         <MenuContainer />
       </div>
     );

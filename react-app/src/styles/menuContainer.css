@@ -2,7 +2,14 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  right: 0;
+  right: -500px;
   width: 500px;
   background: white;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+#menuContainer.active {
+  right: 0px;
+  opacity: 0.8;
 }

@@ -3,7 +3,6 @@ import SerchContainer from './serch/index';
 import '../../styles/menuContainer.css';
 import '../../styles/destyle.css';
 
-const CLOSE_button = "close_button"
 const MENU_NAMES = { 
   "serch_menu": <SerchContainer /> 
 };
