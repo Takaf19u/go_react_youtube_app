@@ -13,3 +13,26 @@
   right: 0px;
   opacity: 0.8;
 }
+
+#menuContainer > ul {
+  float: left;
+  height: 100%;
+}
+
+#menuContainer > ul li {
+  padding: 5px;
+  background: gray;
+  border-bottom: solid 1px #7ef8c6;
+  border-radius: 5px 0 0 5px;
+  font-size: 1.2rem;
+  transition: 0.2s;
+}
+
+#menuContainer > ul li.active {
+  background: white;
+}
+
+#menuContainer > ul svg {
+  pointer-events: none;
+  font-size: 1.5rem;
+}

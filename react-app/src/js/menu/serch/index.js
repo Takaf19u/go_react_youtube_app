@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faYoutube } from '@fortawesome/free-brands-svg-icons'
+import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 import '../../../styles/serchContainer.css';
 import '../../../styles/destyle.css';
 import axios from 'axios';

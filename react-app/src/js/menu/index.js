@@ -1,10 +1,14 @@
 import React from 'react';
-import SerchContainer from './serch/index';
+import SerchComponent from './serch/index';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import '../../styles/menuContainer.css';
 import '../../styles/destyle.css';
 
-const MENU_NAMES = { 
-  "serch_menu": <SerchContainer /> 
+const MENU_NAMES = ["serch_menu"]
+const MENU_CONTENTS = { 
+  "serch_menu" : [ <SerchComponent />, <FontAwesomeIcon icon={faSearch} /> ],
+  "test_menu" : [ "", <FontAwesomeIcon icon={faSearch} /> ]
 };
 
 class MenuComponent extends React.Component {
@@ -12,7 +16,7 @@ class MenuComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeMenu: "",
+      activeMenu: MENU_NAMES[0],
     };
     this.menu = React.createRef();
     this.menuClick = this.menuClick.bind(this);
@@ -24,19 +28,28 @@ class MenuComponent extends React.Component {
 
   // メニュー用li要素を返す
   createMenuList = () => {
+    var Lists = [];
+    var li_name;
+    for (let key in MENU_CONTENTS) {
+      li_name = "menu_button"
+      if(this.state.activeMenu == key){ li_name = li_name + " active" };
+      Lists.push(
+        <li id={key} className={li_name} onClick={this.menuClick}>{MENU_CONTENTS[key][1]}</li>
+      );
+    };
     return (
-      Object.keys(MENU_NAMES).map( (name, key) =>
-        <li id={name} className="menu_button" key={key} onClick={this.menuClick}>test</li>
-      )
+      <ul>
+        {Lists}
+      </ul>
     )
   }
 
   // アクティブなコンテナを返す
   activeContainer = () => {
     var container
-    for (let key in MENU_NAMES) {
+    for (let key in MENU_CONTENTS) {
       if(this.state.activeMenu == key){
-        container = MENU_NAMES[key];
+        container = MENU_CONTENTS[key][0];
         break
       };
     };
@@ -46,9 +59,7 @@ class MenuComponent extends React.Component {
   render() {
     return (
       <div id="menuContainer" ref={this.menu}>
-        <ul>
-          {this.createMenuList()}
-        </ul>
+        {this.createMenuList()}
         {this.activeContainer()}
       </div>
     );

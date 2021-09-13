@@ -4,6 +4,7 @@ header {
   height: 60px;
   width: 100%;
   background: rgb(121, 120, 120);
+  border-bottom: 3px solid #605b5b;
   z-index: 998;
 }
 header button {
