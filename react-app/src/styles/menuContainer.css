@@ -4,7 +4,6 @@
   bottom: 0;
   right: -500px;
   width: 500px;
-  background: white;
   opacity: 0;
   transition: 0.5s;
 }
@@ -20,10 +19,13 @@
 }
 
 #menuContainer > ul li {
-  padding: 5px;
+  padding: 5px 0;
+  height: 35px;
+  width: 35px;
   background: gray;
   border-bottom: solid 1px #7ef8c6;
   border-radius: 5px 0 0 5px;
+  text-align: center;
   font-size: 1.2rem;
   transition: 0.2s;
 }
@@ -35,4 +37,12 @@
 #menuContainer > ul svg {
   pointer-events: none;
   font-size: 1.5rem;
+}
+
+#menuContainer .menus {
+  margin-left: 35px;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  background: white;
 }

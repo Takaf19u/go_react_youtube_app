@@ -1,15 +1,13 @@
-.serchContainer {
-  width: 100%;
-  background: white;
+#serchContainer {
 }
 
-.serchContainer .videoList .videoframe {
+#serchContainer .videoList .videoframe {
   position: relative;
   cursor: pointer;
   width: 200px;
 }
 
-.serchContainer .videoList .videoframe:after {
+#serchContainer .videoList .videoframe:after {
   content: "";
   position: absolute;
   top: 0;
@@ -19,20 +17,20 @@
   transition: 0.5s;
 }
 
-.serchContainer .videoList .videoframe .video {
+#serchContainer .videoList .videoframe .video {
   position: relative;
   padding-top: 56.25%;
   overflow: hidden;
 }
 
-.serchContainer .videoList .videoframe .videoImage {
+#serchContainer .videoList .videoframe .videoImage {
     position: absolute;
     top: -17%;
     left: 0;
     width: 100%;
 }
 
-.serchContainer .videoList .videoframe svg {
+#serchContainer .videoList .videoframe svg {
   position: absolute;
   top: 40%;
   left: 0;
@@ -44,12 +42,12 @@
   transition: 0.5s;
 }
 
-.serchContainer .videoList .videoframe:hover:after {
+#serchContainer .videoList .videoframe:hover:after {
   background: gray;
   opacity: 0.4;
 }
 
-.serchContainer .videoList .videoframe:hover svg  {
+#serchContainer .videoList .videoframe:hover svg  {
   color: #ff0100;
   opacity: 1;
 }

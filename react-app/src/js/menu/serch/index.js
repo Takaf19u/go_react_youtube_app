@@ -46,7 +46,7 @@ class SerchComponent extends React.Component {
   render() {
     var videoFrame = createVideoImageFrame(this.state.items);
     return (
-      <div className="serchContainer">
+      <div id="serchContainer" className="menus">
         <div id="serch_menu" className="menu_button"></div>
         <p>キーワード入力でyoutubeの検索結果をかえす</p>
         <form onSubmit={this.onSubmit}>
