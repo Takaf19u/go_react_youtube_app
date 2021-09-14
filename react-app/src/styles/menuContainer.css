@@ -1,11 +1,12 @@
 #menuContainer {
   position: absolute;
-  top: 0;
+  top: 60px;
   bottom: 0;
   right: -500px;
   width: 500px;
   opacity: 0;
   transition: 0.5s;
+  z-index: 900;
 }
 
 #menuContainer.active {

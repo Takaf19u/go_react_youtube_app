@@ -48,7 +48,7 @@ class App extends React.Component {
   render() {
     var videoFrame = createVideoImageFrame(this.state.items);
     return (
-      <div className="videoContainer">
+      <div id="videoContainer">
         <MenuContainer />
       </div>
     );
@@ -64,25 +64,15 @@ function createVideoImageFrame(items) {
     items.map( (item, i) => 
       frames.push(
         <div className={"videoframe frame-" + i}>
-          <div className="video">
+          {/* <div className="video">
             <img className="videoImage" src={item.snippet.thumbnails.high.url} />
           </div>
-          <FontAwesomeIcon icon={faYoutube} />
+          <FontAwesomeIcon icon={faYoutube} /> */}
         </div>
       )
     )
   }
   return frames
 }
-
-// class VideoList extends React.Component {
-//   render() {
-//     return (
-//       <button className="square">
-//         {this.props.value[0]}
-//       </button>
-//     );
-//   }
-// }
 
 export default App;
