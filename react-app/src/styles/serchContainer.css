@@ -5,55 +5,27 @@
 /* videoframe 共通設定 */
 /* ============================================ */
 .videoframe {
-  position: relative;
-  cursor: pointer;
   width: 200px;
-  height: 100px;
-  background: red;
+  height: auto;
+  user-select: none;
 }
 
-/* .videoframe:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  transition: 0.5s;
-} */
+.videoframe .video,
+.videoframe .videoImage {
+  pointer-events: none;
+}
 
 .videoframe .video {
   position: relative;
   padding-top: 56.25%;
+  cursor: pointer;
+  overflow: hidden;
 }
 
-.videoframe .videoImage {
+.videoframe  .video .videoImage {
   position: absolute;
   top: -17%;
   left: 0;
-  /* width: 100%; */
+  width: 100%;
   object-fit: cover;
-  opacity: 0.4;
 }
-
-/* .videoframe svg {
-  position: absolute;
-  top: 40%;
-  left: 0;
-  right: 0;
-  margin: auto;
-  height: auto;
-  width: 20%;
-  opacity: 0;
-  transition: 0.5s;
-} */
-
-/* .videoframe:hover:after {
-  background: gray;
-  opacity: 0.4;
-} */
-
-/* .videoframe:hover svg  {
-  color: #ff0100;
-  opacity: 1;
-} */

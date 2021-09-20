@@ -1,7 +1,31 @@
 #videoContainer {
   height: 100%;
   width: 100%;
+}
+
+#video_area {
+  height: 100%;
+  width: 100%;
   background-color: black;
+  font-size: 0;
+  overflow: scroll;
+}
+
+#videoContainer .videoframe.player {
+  display: inline-block;
+  width: 480px;
+}
+
+#videoContainer .videoframe.player .video {
+  pointer-events: auto;
+}
+
+#videoContainer iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 @media (prefers-reduced-motion: no-preference) {
