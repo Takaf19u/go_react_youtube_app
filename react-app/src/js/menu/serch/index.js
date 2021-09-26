@@ -1,7 +1,9 @@
 import React from 'react';
+import PaginateComponent from '../../shared/paginate'
 import { createPlayerFrame } from '../../video/index'
 import '../../../styles/serchContainer.css';
 import '../../../styles/destyle.css';
+import '../../../styles/pagination.css';
 import axios from 'axios';
 
 const SERVER_URL = "http://localhost:8080"
@@ -22,6 +24,7 @@ class SerchComponent extends React.Component {
     this.state = {
       keyword: "",
       items: [],
+      totalVideos: 0,
       selectPage: 0,
     };
     // thisに各メソッドを紐付け
@@ -29,6 +32,7 @@ class SerchComponent extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
+    this.pageChange = this.pageChange.bind(this);
   };
 
   // 初回のレンダリング直後にdocumentにポップアップクローズ処理をセット
@@ -51,13 +55,13 @@ class SerchComponent extends React.Component {
     .then(res => res.json())
     .then(resJson => { 
       console.log(resJson);
-      this.setState({items: resJson.items})
+      this.setState({items: resJson.items, totalVideos: resJson.itemLength})
     });
   };
 
   pageChange(data) {
-    let pageNumber = data['selected'];
-    this.setState({ selectPage: pageNumber })
+    var pageNumber = data['selected'];
+    this.setState({selectPage: pageNumber })
   }
 
   onMouseDown(e) {
@@ -115,7 +119,7 @@ class SerchComponent extends React.Component {
   createVideoImageFrame = (items) => {
     var frames = []
     if (items.length == 0) {
-      frames.push('検索結果の表示');
+      frames.push('');
     } else {
       items[this.state.selectPage].map( (item, i) => 
         frames.push(
@@ -133,14 +137,17 @@ class SerchComponent extends React.Component {
 
   render() {
     var videoFrame = this.createVideoImageFrame(this.state.items);
+    var paginate = <PaginateComponent
+                    pageChange={this.pageChange}
+                    total={this.state.totalVideos}
+                    items={this.state.items} />
     return (
       <div id="serchContainer" className="menus">
-        <div id="serch_menu" className="menu_button"></div>
-        <p>キーワード入力でyoutubeの検索結果をかえす</p>
         <form onSubmit={this.onSubmit}>
-          <input type='text' value={this.state.value} onChange={this.onChange} />
-          <input type='submit' value="送信"/>
+          <input type='text' value={this.state.value} onChange={this.onChange} placeholder="youtube serch keyword" />
+          <input type='submit' value="serch"/>
         </form>
+        <div className="pagination_contents">{paginate}</div>
         <ul className="videoList">
           {videoFrame.map( (item, id) => <li key={id}>{item}</li>) }
         </ul>

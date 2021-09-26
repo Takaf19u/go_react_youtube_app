@@ -1,0 +1,39 @@
+
+.pagination_contents {
+  margin: 10px 0;
+  height: 25px;
+}
+
+.pagination {
+  text-align: right;
+  height: 100%;
+}
+
+.pagination li {
+  display: inline-block;
+  margin: 0 2px;
+  height: 100%;
+  width: 25px;
+  font-size: 0.8rem;
+}
+
+.pagination li a {
+  display: inline-block;
+  padding: 5px;
+  height: 100%;
+  width: 100%;
+  background: rgb(148, 147, 147);
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.pagination li a.active {
+  background: black;
+}
+
+.pagination li a:hover {
+  opacity: 0.7;
+}

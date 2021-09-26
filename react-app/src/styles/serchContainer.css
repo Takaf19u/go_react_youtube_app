@@ -1,6 +1,39 @@
 #serchContainer {
 }
 
+#serchContainer form {
+  position: relative;
+  height: 30px;
+}
+
+#serchContainer form input[type="text"] {
+  padding: 5px;
+  height: 100%;
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 0 50px 50px 0;
+}
+input[type="text"]:focus {
+  background: #def4ff;
+}
+
+
+#serchContainer form input[type="submit"] {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  padding: 5px 10px;
+  border-radius: 0 50px 50px 0;
+  background: black;
+  color: white;
+  transition: 0.2s;
+}
+
+#serchContainer form input[type="submit"]:hover {
+  opacity: 0.7;
+}
+
 
 /* videoframe 共通設定 */
 /* ============================================ */
