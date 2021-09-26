@@ -1,7 +1,6 @@
 package youtube
 
 import (
-	// "encoding/json"
 	// "fmt"
 	"github.com/joho/godotenv"
 	// "google.golang.org/api/googleapi/transport"
@@ -49,6 +48,8 @@ func SearchYoutubeList(keyword string) ([]byte, error) {
 	return body, nil
 }
 
+// private
+// -------------------------------------------------------------
 func getYoutubeKey() string {
 	var getKey string
 	err := godotenv.Load(envPath)
@@ -87,7 +88,7 @@ func createSendParams(request *http.Request, key string) string {
 	sendParams.Add("key", key)
 	sendParams.Add("q", params.Keyword)
 	sendParams.Add("part", "snippet, id")
-	sendParams.Add("maxResults", "50")
+	sendParams.Add("maxResults", "10")
 
 	return sendParams.Encode()
 }

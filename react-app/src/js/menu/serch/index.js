@@ -22,6 +22,7 @@ class SerchComponent extends React.Component {
     this.state = {
       keyword: "",
       items: [],
+      selectPage: 0,
     };
     // thisに各メソッドを紐付け
     // これにより、this.メソッド名で呼び出せる
@@ -44,15 +45,20 @@ class SerchComponent extends React.Component {
   onSubmit(e) {
     e.preventDefault();
     var params = {method : "POST", body : JSON.stringify({keyword : this.state.keyword})};
-    this.setState({items: test_data.items })
+    // this.setState({items: test_data.items })
     // 何度もつなぐと取得できなくなるため
-    // fetch(SERCH_YOUTUBE_VIDEO_URL, params)
-    // .then(res => res.json())
-    // .then(resJson => { 
-    //   console.log(resJson);
-    //   this.setState({items: resJson.items})
-    // });
+    fetch(SERCH_YOUTUBE_VIDEO_URL, params)
+    .then(res => res.json())
+    .then(resJson => { 
+      console.log(resJson);
+      this.setState({items: resJson.items})
+    });
   };
+
+  pageChange(data) {
+    let pageNumber = data['selected'];
+    this.setState({ selectPage: pageNumber })
+  }
 
   onMouseDown(e) {
     // 元要素の座標取得
@@ -79,7 +85,6 @@ class SerchComponent extends React.Component {
       let video_leftX = clone_el.getBoundingClientRect().left;
       let menu_leftX = menuContainer.getBoundingClientRect().left;
       moveAt(e.clientX, e.clientY);
-      // debugger
       if (video_leftX < menu_leftX) {
         video_area.style.background = "#5d5b5b";
       } else {
@@ -106,13 +111,13 @@ class SerchComponent extends React.Component {
     clone_el.ondragstart = false;
   }
 
-  // 動画のサムネイル表示html
+  // 選択したページの情報を作成
   createVideoImageFrame = (items) => {
     var frames = []
     if (items.length == 0) {
       frames.push('検索結果の表示');
     } else {
-      items.map( (item, i) => 
+      items[this.state.selectPage].map( (item, i) => 
         frames.push(
           <div className={"videoframe frame-" + i}
                onMouseDown={this.onMouseDown} >

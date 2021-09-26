@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	// "fmt"
 	"io/ioutil"
 	"log"
 	// "google.golang.org/api/googleapi/transport"
@@ -11,11 +11,6 @@ import (
 	"go_react_test_app/youtube"
 	"net/http"
 )
-
-type YoutubeResponse struct {
-	Status int           `json:"status"`
-	Items  []interface{} `json:"items"`
-}
 
 func main() {
 	// POST
@@ -56,18 +51,14 @@ func main() {
 		// json.Unmarshalはjsonを構造体に変換
 		// func Unmarshal(data []byte, v interface{}) error
 		json.Unmarshal(body, &params)
-
 		res, err := youtube.SearchYoutubeList(params.Keyword)
 		if err != nil {
 			log.Println(err)
 			return
 		}
 
-		var youtubeRes YoutubeResponse
-		json.Unmarshal(res, &youtubeRes)
-		youtubeRes.Status = http.StatusOK
+		youtubeRes := youtube.FormatResponse(res)
 		jsonRes, _ := json.Marshal(youtubeRes)
-		fmt.Println(string(jsonRes))
 
 		// ヘッダー設定
 		w.Header().Set("Access-Control-Allow-Origin", "*")
