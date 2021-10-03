@@ -48,6 +48,29 @@ func SearchYoutubeList(keyword string) ([]byte, error) {
 	return body, nil
 }
 
+func ChannelVideosList(keyword string) ([]byte, error) {
+	params.Keyword = keyword
+
+	//envファイル読み込み
+	youtube_key := getYoutubeKey()
+	if youtube_key == "" {
+		return nil, errMessages["envLoad"]
+	}
+
+	res, err := sendRequest(youtube_key)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return body, errMessages["readBody"]
+	}
+
+	return body, nil
+}
+
 // private
 // -------------------------------------------------------------
 func getYoutubeKey() string {
