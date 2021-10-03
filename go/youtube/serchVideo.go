@@ -88,6 +88,7 @@ func createSendParams(request *http.Request, key string) string {
 	sendParams.Add("key", key)
 	sendParams.Add("q", params.Keyword)
 	sendParams.Add("part", "snippet, id")
+	sendParams.Add("type", "video")
 	sendParams.Add("maxResults", "10")
 
 	return sendParams.Encode()

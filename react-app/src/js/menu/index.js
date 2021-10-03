@@ -1,5 +1,5 @@
 import React from 'react';
-import SerchComponent from './serch/index';
+import SerchComponent from './ search/index';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import '../../styles/menuContainer.css';
@@ -17,6 +17,7 @@ class MenuComponent extends React.Component {
     super(props);
     this.state = {
       activeMenu: MENU_NAMES[0],
+      videoItems: [],
     };
     this.menu = React.createRef();
     this.menuClick = this.menuClick.bind(this);
