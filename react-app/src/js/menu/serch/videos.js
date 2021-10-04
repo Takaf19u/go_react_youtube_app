@@ -1,5 +1,6 @@
 import React from 'react';
 import PaginateComponent from '../../shared/paginate'
+import Mousemove from '../../shared/mousemove'
 import '../../../styles/serchContainer.css';
 import '../../../styles/destyle.css';
 import '../../../styles/pagination.css';
@@ -43,7 +44,7 @@ class SerchVideosComponent extends React.Component {
         frames.push(
           <div>
             <div className={"videoframe frame-" + i}
-                onMouseDown={this.props.onMouseDown} >
+                onMouseDown={Mousemove} >
               <div className="video" data-url={YOUTUBE_VIDEO_URL + item.id.videoId + "?enablejsapi=1&autoplay=1"}>
                 <img className="videoImage" src={item.snippet.thumbnails.high.url} />
               </div>

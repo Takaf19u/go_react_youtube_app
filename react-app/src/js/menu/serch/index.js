@@ -1,14 +1,11 @@
 import React from 'react';
 import SerchVideosComponent from './videos'
 import SerchCannelsComponent from './channels'
-import {createPlayerFrame} from '../../video/index'
 import '../../../styles/serchContainer.css';
 import '../../../styles/destyle.css';
 import '../../../styles/pagination.css';
 import axios from 'axios';
 
-let video_area;
-let menuContainer;
 const SERVER_URL = "http://localhost:8080"
 const SERCH_YOUTUBE_VIDEO_URL = `${SERVER_URL}/get`;
 axios.defaults.baseURL = SERVER_URL;
@@ -34,17 +31,10 @@ class SerchComponent extends React.Component {
     this.onClick = this.onClick.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.onMouseDown = this.onMouseDown.bind(this);
 
     // 参照作成
     this.VideosRef = React.createRef();
     this.CannelsRef = React.createRef();
-  };
-
-  // 初回のレンダリング直後にdocumentにポップアップクローズ処理をセット
-  componentDidMount() {
-    video_area = document.getElementById("video_area");
-    menuContainer = document.getElementById("menuContainer");
   };
 
   onClick(e) {
@@ -67,57 +57,6 @@ class SerchComponent extends React.Component {
       this.searchVideos(this.state.keyword);
     }
   };
-
-  onMouseDown(e) {
-    // 元要素の座標取得
-    var shiftX = e.clientX - e.target.getBoundingClientRect().left;
-    var shiftY = e.clientY - e.target.getBoundingClientRect().top;
-    // クローン作成
-    var clone_el = e.target.cloneNode(true);
-    clone_el.style.position = 'absolute';
-    clone_el.style.zIndex = 1000;
-
-    // cloneを video_area へ移動させ、相対配置をする
-    video_area.append(clone_el);
-    moveAt(e.clientX, e.clientY);
-    clone_el.addEventListener('mousemove', onMouseMove);
-
-    // クリック中の要素を（pageX、pageY）座標の中心に置く
-    function moveAt(pageX, pageY) {
-      clone_el.style.left = pageX - shiftX + 'px';
-      clone_el.style.top = pageY - shiftY + 'px';
-    }
-
-    // cloneを移動する
-    function onMouseMove(e) {
-      let video_leftX = clone_el.getBoundingClientRect().left;
-      let menu_leftX = menuContainer.getBoundingClientRect().left;
-      moveAt(e.clientX, e.clientY);
-      if (video_leftX < menu_leftX) {
-        video_area.style.background = "#5d5b5b";
-      } else {
-        video_area.style.background = "black";
-      }
-    }
-
-    // 要素をドロップする。不要なハンドラを削除する
-    clone_el.onmouseup = function() {
-      let video_leftX = clone_el.getBoundingClientRect().left;
-      let menu_leftX = menuContainer.getBoundingClientRect().left;
-      if (video_leftX < menu_leftX) {
-        clone_el.removeEventListener('mousemove', onMouseMove);
-        createPlayerFrame(clone_el);
-        clone_el.classList.add("player");
-        video_area.removeAttribute('style');
-        clone_el.removeAttribute('style');
-      } else {
-        clone_el.remove();
-      }
-      clone_el.onmouseup = null;
-    };
-
-    clone_el.ondragstart = false;
-  }
 
   searchVideos = (keyword) => {
     var params = {method : "POST", body : JSON.stringify({keyword : keyword})};
@@ -147,9 +86,9 @@ class SerchComponent extends React.Component {
 
   selectList = (res) => {
     if (this.state.listFlag == 0) {
-      return <SerchVideosComponent onMouseDown={this.onMouseDown} ref={this.VideosRef} videoRes={res} />
+      return <SerchVideosComponent ref={this.VideosRef} videoRes={res} />
     } else if (this.state.listFlag == 1) {
-      // return <SerchCannelsComponent onMouseDown={this.onMouseDown} ref={this.CannelsRef} cannelRes={res} />
+      // return <SerchCannelsComponent ref={this.CannelsRef} cannelRes={res} />
       return "test"
     }
   }

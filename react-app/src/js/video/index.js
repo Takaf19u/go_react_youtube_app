@@ -18,11 +18,3 @@ export default class PlayVideosView extends React.Component {
     );
   }
 }
-
-export function createPlayerFrame(videoFrame) {
-  var videoClass = videoFrame.getElementsByClassName("video");
-  var img = videoClass[0].querySelector("img");
-  var iframe = document.createElement("iframe");
-  iframe.src = videoClass[0].dataset.url;
-  videoClass[0].replaceChild(iframe, img);
-}
