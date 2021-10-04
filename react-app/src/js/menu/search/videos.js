@@ -1,18 +1,18 @@
 import React from 'react';
 import PaginateComponent from '../../shared/paginate'
 import Mousemove from '../../shared/mousemove'
-import '../../../styles/serchContainer.css';
+import '../../../styles/searchContainer.css';
 import '../../../styles/destyle.css';
 import '../../../styles/pagination.css';
 
 const YOUTUBE_VIDEO_URL = "https://www.youtube.com/embed/"
 
-class SerchVideosComponent extends React.Component {
+class SearchVideosComponent extends React.Component {
   // コンストラクタ。初期設定を行う
   constructor(props) {
     super(props);
     this.state = {
-      serchView: null, 
+      searchView: null, 
       totalVideos: 0,
     };
     // thisに各メソッドを紐付け
@@ -21,12 +21,12 @@ class SerchVideosComponent extends React.Component {
   };
 
   pageChange(data) {
-    this.setState({serchView: this.videoList(this.props.videoRes.items, data['selected']) })
+    this.setState({searchView: this.videoList(this.props.videoRes.items, data['selected']) })
   }
 
   setJsonState = (jsonRes) => {
     this.setState({totalVideos: jsonRes.itemLength,
-                   serchView: this.videoList(jsonRes.items)})
+                   searchView: this.videoList(jsonRes.items)})
   }
 
   videoList = (items, selectPage = 0) => {
@@ -69,11 +69,11 @@ class SerchVideosComponent extends React.Component {
       <div id="VideoList">
         <div className="pagination_contents">{paginate}</div>
         <ul className="videoList">
-          {this.state.serchView }
+          {this.state.searchView }
         </ul>
       </div>
     );
   }
 }
 
-export default SerchVideosComponent;
+export default SearchVideosComponent;

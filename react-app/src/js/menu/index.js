@@ -1,13 +1,13 @@
 import React from 'react';
-import SerchComponent from './serch/index';
+import SearchComponent from './search/index';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import '../../styles/menuContainer.css';
 import '../../styles/destyle.css';
 
-const MENU_NAMES = ["serch_menu"]
+const MENU_NAMES = ["search_menu"]
 const MENU_CONTENTS = { 
-  "serch_menu" : [ <SerchComponent />, <FontAwesomeIcon icon={faSearch} /> ],
+  "search_menu" : [ <SearchComponent />, <FontAwesomeIcon icon={faSearch} /> ],
   "test_menu" : [ "", <FontAwesomeIcon icon={faSearch} /> ]
 };
 
