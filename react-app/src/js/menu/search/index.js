@@ -5,12 +5,14 @@ import '../../../styles/searchContainer.css';
 import '../../../styles/destyle.css';
 import '../../../styles/pagination.css';
 import axios from 'axios';
+import { faTintSlash } from '@fortawesome/free-solid-svg-icons';
 
 const SEARCH_TABS_NAME = ["video_tab", "channel_tab"]
-const PLSCEHOLDER = ["video_tab", "channel_tab"]
+const SEARCH_TABS_VALUE = ["video", "channel"]
+const PLSCEHOLDER = ["search video", "search channel"]
 const SERVER_URL = "http://localhost:8080"
 const search_YOUTUBE_VIDEO_URL = `${SERVER_URL}/get`;
-var serchTabs = []
+var searchTabs = []
 
 axios.defaults.baseURL = SERVER_URL;
 axios.proxy = true;
@@ -41,24 +43,33 @@ class SearchComponent extends React.Component {
   };
 
   onClick(e) {
-    var componentData;
     e.preventDefault();
-    debugger
-    if ( e.target.id == SEARCH_TABS_NAME[0] ) {
-      componentData = [ this.state.videoRes, this.VideosRef ]
-      serchTabs[0].className = "active"
-      serchTabs[1].remove.className = "active"
-    } else if (e.target.id == SEARCH_TABS_NAME[1]) {
-      componentData = [ this.state.cannelRes, this.CannelsRef ]
-      serchTabs[1].className = "active"
-      serchTabs[0].remove.className = "active"
+    var listFlag;
+    var tabsData = {
+      [SEARCH_TABS_NAME[0]]: [ this.state.videoRes, this.VideosRef ],
+      [SEARCH_TABS_NAME[1]]: [ this.state.cannelRes, this.CannelsRef ],
+    };
+
+    for(var i = 0; i < searchTabs.length; i++) {
+      if (searchTabs[i].className == "active") {
+        searchTabs[i].remove.className = "active"
+        break
+      }
     }
 
-    for(let i = 0; i < 100; i++) {
-      ar[i] = "test";
-  }
+    switch (e.target.id) {
+      case SEARCH_TABS_NAME[1]:
+        searchTabs[1].className = "active"
+        listFlag = 1
+        break
+      default:
+        // どれも該当しない場合、動画検索画面を格納
+        searchTabs[0].className = "active"
+        listFlag = 0
+    }
 
-    var component = componentData[0].length == 0 ? null : this.selectList(componentData[0]);
+    var componentData = tabsData[SEARCH_TABS_NAME[listFlag]]
+    var component = "items" in componentData[0] ? this.selectList(componentData[0]) : null;
     this.setState({listComponent: component},()=>{
       if (component === null) return
       this.setJsonState(componentData[1], componentData[0]);
@@ -106,7 +117,7 @@ class SearchComponent extends React.Component {
       return <SearchVideosComponent ref={this.VideosRef} videoRes={res} />
     } else if (this.state.listFlag == 1) {
       // return <SearchCannelsComponent ref={this.CannelsRef} cannelRes={res} />
-      return "test"
+      return null
     }
   }
 
@@ -118,11 +129,12 @@ class SearchComponent extends React.Component {
     return (
       <div id="searchContainer" className="menus">
         <ul>
-          <li id={SEARCH_TABS_NAME[0]} className="active" ref={ li => { serchTabs[0] = li }} onClick={this.onClick}>video</li>
-          <li id={SEARCH_TABS_NAME[1]} ref={ li => { serchTabs[1] = li }} onClick={this.onClick}>channel</li>
+          {SEARCH_TABS_NAME.map( (name, id) => 
+            <li id={name} ref={ li => { searchTabs[id] = li }} onClick={this.onClick}>{SEARCH_TABS_VALUE[id]}</li>
+          )}
         </ul>
         <form onSubmit={this.onSubmit}>
-          <input type='text' value={this.state.keyword} onChange={this.onChange} placeholder={placeholder[this.state.listFlag]} />
+          <input type='text' value={this.state.keyword} onChange={this.onChange} placeholder={PLSCEHOLDER[this.state.listFlag]} />
           <input type='submit' value="search"/>
         </form>
         {this.state.listComponent}

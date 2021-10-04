@@ -63,7 +63,7 @@ class SearchVideosComponent extends React.Component {
   render() {
     var paginate = <PaginateComponent
                     pageChange={this.pageChange}
-                    total={this.props.videoRes.totalVideos}
+                    total={this.props.videoRes.itemLength}
                     items={this.props.videoRes.items} />
     return (
       <div id="VideoList">
